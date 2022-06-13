@@ -1,11 +1,12 @@
 # Custom
 
 package-lock.json
-# *.js
 bin/ 
 *.blend
 
 server/functions/permissions.json
+
+.DS_Store
 
 
 # Logs
