@@ -1,8 +1,7 @@
 import { Item } from "./item"
 import { Component, components } from "./components"
-import { sceneMessageBus } from "./messagebus"
-import { ScoreTextManager, SimpleMove } from "./scoreTextManager"
-
+import { ScoreTextManager } from "./scoreTextManager"
+import * as utils from '@dcl/ecs-scene-utils'
 
 export class Npc extends Entity {
     
@@ -11,11 +10,7 @@ export class Npc extends Entity {
     scoreManager: ScoreTextManager
 
     idle: AnimationState
-    // death: AnimationState
-    // duck: AnimationState
-    // hitReact: AnimationState
     no: AnimationState
-    // punch: AnimationState
     wave: AnimationState
     yes: AnimationState
 
@@ -23,8 +18,6 @@ export class Npc extends Entity {
     constructor( 
         position: Vector3 = new Vector3(4,0,4),
         rotation: Quaternion = new Quaternion(0,0,0,0)
-        //wantedComponent: Component
-
     ) {
         super()
 
@@ -37,26 +30,24 @@ export class Npc extends Entity {
             position: position,
             rotation: rotation
         }))
-        // this.addComponent(new Billboard(false,true,false ))
 
         this.addComponent(new Animator())
         this.idle = new AnimationState("Idle", { layer: 0})
         this.idle.looping = true
         this.idle.weight = 0.5
-        //this.death = new AnimationState("Death")
-        //this.death.looping = true
+
         this.getComponent(Animator).addClip(this.idle)
-        // this.duck = new AnimationState("Duck")
-        // this.hitReact = new AnimationState("HitReact")
+ 
         this.no = new AnimationState("No", { layer: 1})
         this.no.looping = false
         this.no.weight = 0.5
         this.getComponent(Animator).addClip(this.no)
-        // this.punch = new AnimationState("Punch")
+
         this.wave = new AnimationState("Wave", { layer: 1})
         this.wave.looping = false
         this.wave.weight = 0.5
         this.getComponent(Animator).addClip(this.wave)
+
         this.yes = new AnimationState("Yes", { layer: 1})
         this.yes.looping = false
         this.yes.weight = 0.5
@@ -103,9 +94,36 @@ export class Npc extends Entity {
 
     public wantNewComponent(component: Component) {
         // animation 
-        
-        this.wantedItem.component = component
-        this.wantedItem.addComponentOrReplace(component.shape)
+
+        this.delayedThinkAboutItem(100)
+        this.delayedThinkAboutItem(200)
+        this.delayedThinkAboutItem(300)
+        this.delayedThinkAboutItem(400)
+        this.delayedThinkAboutItem(500)
+        this.delayedThinkAboutItem(600)
+        this.delayedThinkAboutItem(800)
+        this.delayedThinkAboutItem(1000)
+        this.delayedThinkAboutItem(1250)
+        this.delayedThinkAboutItem(1500)
+        this.delayedThinkAboutItem(1750)
+
+        // this is the wanted item
+        this.delayedThinkAboutItem(2500, component)
+ 
+    }
+
+    private  delayedThinkAboutItem(delay:number, component?:Component) {
+       let comp: Component
+        if (component) {
+            comp = component
+        } else {
+            comp = components[Math.floor(Math.random()*components.length)]
+        }
+       
+        utils.setTimeout(delay, ()=>{
+                this.wantedItem.component = comp
+                this.wantedItem.addComponentOrReplace(comp.shape)
+        })
     }
 
     public playAnimation(anim:string) {
@@ -132,39 +150,5 @@ export class Npc extends Entity {
             }
         ))
     }
-
-    // public getHungryFor(component:FoodComponent): void {
-    //     this.hungryFor.name = component.name
-    //     this.hungryFor.addComponentOrReplace(component.shape)
-    // }
-
-    // public async feed(food: Food): Promise<void> {
-    //     log("Cat: Mmmmh food!")
-
-    //     // play thinkung animation
-    //     // send item ID to server
-    //     const res = await foodManager.checkItem(food) // {rightItem:boolean, newWantedItem, newItemReplacing the eaten one}
-    //     // server responds true or false + new Realm list & wanted Items
-    //     if (res.rightItem) {
-    //         this.getHungryFor(foodComponents[res.wantedItems])
-    //     } else {
-    //         log("Cat: I dont want that!")
-    //         this.getComponent(Transform).position = new Vector3(Math.random()*14+1,0,Math.random()*14+1)
-    //     }
-
-
-
-    //     if (food.name == this.hungryFor.name) {
-    //         log("Cat: This is what I want")
-    //         /
-    //         this.getHungry()
-    //     } else {
-    //         log("Cat: I dont want that!")
-    //         this.getComponent(Transform).position = new Vector3(Math.random()*14+1,0,Math.random()*14+1)
-    //     }
-    //     food.newIdentity(food)
-    // }
-
-  
 
 }
