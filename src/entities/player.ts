@@ -2,6 +2,7 @@ import { UserData } from "@decentraland/Identity"
 import { fireBaseServer } from "./firebase"
 import { Item } from "./item"
 import { RealmManager } from "./realmManager"
+import { audioclips } from './audioclips'
 
 type sPlayer = {
     publicKey: string,
@@ -17,7 +18,10 @@ export class Player {
     isGrabbing: boolean = false
     grabbedItem: Item | null | undefined
 
+    audio: Entity
+
     private Z_OFFSET: number = 0.7
+    private Y_OFFSET: number = 0
     private GROUND_HEIGHT: number = 0.1
 
     constructor(
@@ -30,6 +34,11 @@ export class Player {
         log("publicKey: " + this.userData?.publicKey)
         log("displayName: " + this.userData?.displayName)
         log("hasConnectedWeb3: " + this.userData?.hasConnectedWeb3)
+
+
+        this.audio = new Entity()
+        engine.addEntity(this.audio)
+        this.audio.setParent(Attachable.AVATAR)
 
     }
 
@@ -66,10 +75,12 @@ export class Player {
         transform.position = Vector3.Zero()
         transform.rotation = Quaternion.Zero()
         transform.position.z += this.Z_OFFSET
-        transform.position.y = 0.5
+        transform.position.y = this.Y_OFFSET
         //transform.rotation = Quaternion.Zero()
 
         this.grabbedItem.setParent(Attachable.AVATAR)
+
+        this.pickUpSound()
     }
 
     public dropItemInto(realmManager: RealmManager): Item | undefined {
@@ -95,17 +106,24 @@ export class Player {
             //     transform.position.x = x
             //     transform.position.z = z
             // }
+            this.dropSound()
 
             this.grabbedItem.setParent(realmManager)
         
             this.grabbedItem.isGrabbed = false
             return this.grabbedItem
         }
-                 
-
-
+    }
+    
+    private pickUpSound() {
+        this.audio.addComponentOrReplace(new AudioSource(audioclips.pickUp))
+        this.audio.getComponent(AudioSource).playing = true
     }
 
+    private dropSound() {
+        this.audio.addComponentOrReplace(new AudioSource(audioclips.throw))
+        this.audio.getComponent(AudioSource).playing = true
+    }
 
 }
 

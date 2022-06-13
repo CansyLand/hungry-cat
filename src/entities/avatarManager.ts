@@ -1,3 +1,4 @@
+import { audioclips } from "./audioclips"
 
 export class AvatarManager {
     avatarList: Avatar[] = []
@@ -43,5 +44,15 @@ export class Avatar extends Entity {
                 anchorPointId: AttachToAvatarAnchorPointId.NameTag
             })
         )
+    }
+
+    public pickUpSound() {
+        this.addComponentOrReplace(new AudioSource(audioclips.pickUp))
+        this.getComponent(AudioSource).playing = true
+    }
+
+    public dropSound() {
+        this.addComponentOrReplace(new AudioSource(audioclips.throw))
+        this.getComponent(AudioSource).playing = true
     }
 }

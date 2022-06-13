@@ -2,6 +2,7 @@ import { Item } from "./item"
 import { Component, components } from "./components"
 import { ScoreTextManager } from "./scoreTextManager"
 import * as utils from '@dcl/ecs-scene-utils'
+import { audioclips } from "./audioclips"
 
 export class Npc extends Entity {
     
@@ -21,15 +22,14 @@ export class Npc extends Entity {
     ) {
         super()
 
-        this.wantedItem = new Item("NonFood", new Vector3(-2.7,4.1,0), components[0], false, Quaternion.Euler(90,0,0))
-        this.wantedItem.getComponent(Transform).scale.set(3,3,3)
-        this.wantedItem.setParent(this)
-        
         this.addComponent(new GLTFShape("models/Character.glb"))
         this.addComponent(new Transform({ 
             position: position,
             rotation: rotation
         }))
+
+
+        // ANIMATIONS
 
         this.addComponent(new Animator())
         this.idle = new AnimationState("Idle", { layer: 0})
@@ -89,11 +89,20 @@ export class Npc extends Entity {
             )
         )
 
+        // WANTED ITEM
+
+        this.wantedItem = new Item("NonFood", new Vector3(-2.7,4.1,0), components[0], false, Quaternion.Euler(90,0,0))
+        this.wantedItem.getComponent(Transform).scale.set(3,3,3)
+        this.wantedItem.addComponent(new AudioSource(audioclips.click))
+        this.wantedItem.setParent(this)
+        
+        
 
     }
 
     public wantNewComponent(component: Component) {
         // animation 
+        this.playClick()
 
         this.delayedThinkAboutItem(100)
         this.delayedThinkAboutItem(200)
@@ -149,6 +158,20 @@ export class Npc extends Entity {
                 distance: feedDistance
             }
         ))
+    }
+
+    private playClick() {
+        this.wantedItem.getComponent(AudioSource).playing = true
+    }
+
+    public correctSound() {
+        this.addComponentOrReplace(new AudioSource(audioclips.correct))
+        this.getComponent(AudioSource).playing = true
+    }
+
+    public wrongSound() {
+        this.addComponentOrReplace(new AudioSource(audioclips.wrong))
+        this.getComponent(AudioSource).playing = true
     }
 
 }

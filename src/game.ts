@@ -10,6 +10,7 @@ import { sceneMessageBus } from './entities/messagebus'
 import { components } from './entities/components'
 import { Leaderboard } from './entities/leaderboard'
 import { Environment } from './entities/environment'
+import { audioclips } from './entities/audioclips'
 
 
 
@@ -126,8 +127,14 @@ Input.instance.subscribe('BUTTON_UP', ActionButton.POINTER, true, async (e) => {
         leaderboard.updateScore(response.scoreReward)
 
         // NPC ANIMATION
-        if (gameState.score > 0) { npc.wave.play() } 
-        else {  npc.no.play() }
+        if (gameState.score > 0) { 
+          npc.wave.play()
+          npc.correctSound() 
+        } 
+        else {  
+          npc.no.play()
+          npc.wrongSound()
+        }
 
         sceneMessageBus.emit("gameState", gameState)
        }
@@ -158,12 +165,19 @@ sceneMessageBus.on("pickUp", (data: any) => {
     const item = realmManager.getItemByID(data.itemID)
     item.avatarGrabbing()
     item.setParent(avatar)
+    avatar.pickUpSound()
   }
 })
 
 sceneMessageBus.on("drop", (data: NewItemPosition) => {
-  if (data.userID != player.userData?.userId)
+  if (data.userID != player.userData?.userId) {
+    if ( data.userID ) {
+      const avatar = avatarManager.getAvatarByID(data.userID)
+      avatar.dropSound()
+    }   
     realmManager.detachItemFromAvatar(data)
+  }
+    
 })
 
 sceneMessageBus.on("gameState", (data: GameState) => {
@@ -199,6 +213,16 @@ onEnterSceneObservable.add((player) => {
   log("player enters scene ", player.userId)
   avatarManager.getAvatarByID(player.userId)
 })
+
+// AUDIO
+
+const audio = new Entity()
+engine.addEntity(audio)
+audio.setParent(Attachable.AVATAR)
+audio.addComponent(new AudioSource(audioclips.music))
+audio.getComponent(AudioSource).loop = true
+audio.getComponent(AudioSource).playing = true
+audio.getComponent(AudioSource).volume = 0.04
 
 // BUGFIX to camera having no position
 
