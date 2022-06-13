@@ -3,7 +3,6 @@ import { Component, components } from "./components"
 import { sceneMessageBus } from "./messagebus"
 import { ScoreTextManager, SimpleMove } from "./scoreTextManager"
 
-// export const cat = new Cat()
 
 export class Npc extends Entity {
     
@@ -103,9 +102,10 @@ export class Npc extends Entity {
     }
 
     public wantNewComponent(component: Component) {
+        // animation 
+        
         this.wantedItem.component = component
-        this.wantedItem.addComponentOrReplace(component.shape) // do I need this?
-       // this.hitReact.play()
+        this.wantedItem.addComponentOrReplace(component.shape)
     }
 
     public playAnimation(anim:string) {
