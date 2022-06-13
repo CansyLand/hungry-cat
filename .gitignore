@@ -1,3 +1,13 @@
+# Custom
+
+package-lock.json
+# *.js
+bin/ 
+*.blend
+
+server/functions/permissions.json
+
+
 # Logs
 logs
 *.log
