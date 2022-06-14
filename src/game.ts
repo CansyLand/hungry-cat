@@ -1,8 +1,8 @@
-import { getCurrentRealm, Realm } from '@decentraland/EnvironmentAPI'
-import { getUserData, UserData } from "@decentraland/Identity"
+import { getCurrentRealm } from '@decentraland/EnvironmentAPI'
+import { getUserData } from "@decentraland/Identity"
 import { getPlayersInScene } from "@decentraland/Players"
 import { Player } from "./entities/player"
-import { AvatarManager, Avatar } from './entities/avatarManager'
+import { AvatarManager } from './entities/avatarManager'
 import { Item} from "./entities/item"
 import { RealmManager, NewItemPosition, DeliverResponse, sItem } from "./entities/realmManager"
 import { Npc } from "./entities/npc"

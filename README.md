@@ -2,13 +2,13 @@
 Decentraland Game Jam 2022: 
 
 Grab an item and feed it to the cat
-The cat will reward you for bringing items it desires in the thought bubble.
+The cat will reward you for bringing items it desires.
+It indicates what it wants in the thought bubble.
 For wrong items it will remove points from your score.
 
 Never full! Never endeing fun :D
 
-The game items are stored and handled on a firebase server.
-Players syncing is done over messagebus
+The game items (cat food) are stored and handled on a firebase server, so it stays in sync with other players.
 
 Test the scene:
 [Play me on test realm](https://hungry-cat.herokuapp.com/?realm=v1%7Ehungry-cat.herokuapp.com&renderer-branch=master&ENABLE_WEB3=&position=0%2C1 )

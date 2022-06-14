@@ -3,6 +3,7 @@
 package-lock.json
 bin/ 
 *.blend
+*.psd
 
 server/functions/permissions.json
 

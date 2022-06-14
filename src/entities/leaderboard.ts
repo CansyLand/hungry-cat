@@ -29,7 +29,7 @@ export class Leaderboard extends Entity {
             rotation: rotation
         }))
 
-        // create the leaderboard text entities
+        // create the leaderboard text-line entities
         for(let i=0; i<6; i++) {
             this.list[i] = this.newLine(i, "Player", 0)
         }

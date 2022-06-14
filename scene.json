@@ -1,14 +1,14 @@
 {
   "display": {
-    "title": "DCL Game Jam – Feed the bunny",
-    "description": "Grab an item and feed it to the bunny!",
+    "title": "DCL Game Jam – Hungry Cat",
+    "description": "Grab an item and feed it to the never get enough cat!",
     "navmapThumbnail": "images/scene-thumbnail.png",
     "favicon": "favicon_asset"
   },
   "owner": "",
   "contact": {
     "name": "Cansy",
-    "email": ""
+    "email": "cansyland@gmail.com"
   },
   "main": "bin/game.js",
   "tags": [],

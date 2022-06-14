@@ -4,7 +4,6 @@ import { fireBaseServer } from "./firebase"
 import { components } from "./components"
 import { Player } from "./player"
 import { Item } from "./item"
-import { UserData } from "@decentraland/Identity"
 
 
 type sRealm = {
@@ -164,20 +163,6 @@ export class RealmManager extends Entity {
         engine.removeEntity(this)
     }
 
-
-    // public attachItemToAvatar(avatarID: string, itemID: string): void { // depricated
-    //     const item = this.getItemByID(itemID)
-    //     item.addComponentOrReplace(
-    //         new AttachToAvatar({
-    //           avatarId: avatarID,
-    //           anchorPointId: AttachToAvatarAnchorPointId.NameTag,
-    //         })
-    //       )
-    //     const pos = item.getComponent(Transform).position
-    //     pos.x += 1
-    //     pos.y -= 0.3
-    // }
-
     public detachItemFromAvatar(data: NewItemPosition) {
         const item = this.getItemByID(data.itemID)
         item.isGrabbed = false
@@ -223,63 +208,6 @@ export class RealmManager extends Entity {
             item.correctError()         
         })
     }
-/*
-    public isGrabbed(): boolean {
-        let isGrabbed = false
-        this.items.forEach(item => {
-            if(item.isGrabbed)
-                isGrabbed = true
-        })
-        return isGrabbed
-    }
-
-    public getGrabbed(): Food | null {
-        let food: Food | null = null
-        this.items.forEach(item => {
-            if(item.isGrabbed)
-                food = item
-        })
-        return food
-    }
-
-    public getRandomItem(): FoodComponent {
-        const randomPositionInList = Math.floor(Math.random() * this.items.length)
-        const item = this.items[randomPositionInList]
-        const shape = item.getComponent(GLTFShape)
-        return {name: item.name, shape: shape }
-    }
-
-    public getWantedComponent(index: number): FoodComponent {
-        return foodComponents[index]
-    }
-
-    public async checkItem(item:Food) {
-        const itemID = "&itemID=" + item.ID
-        const displayName = "&player=" + player.userData?.displayName
-        const publicKey = "&pubKey=" + player.userData?.publicKey
-        const url = fireBaseServer + "/checkItem?realm=" + player.realm + itemID + displayName + publicKey
-
-        try {
-            let response = await fetch(url)
-            let data = await response.json() //  {rightItem:boolean, newWantedItemCompID, newItemReplacing the eaten one}
-            return data
-          } catch {
-            log('error fetching from server ', url)
-          }
-
-    }
-
-    private getIdByName(name:string): number {
-        let ID:number = 0
-        for(let i=0; i<foodComponents.length; i++) {
-            if(foodComponents[i].name==name) {
-                ID = i
-                break
-            }
-        }
-        return ID
-    }
-*/
 }
 
 

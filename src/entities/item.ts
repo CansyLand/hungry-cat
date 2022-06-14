@@ -95,13 +95,6 @@ export class Item extends Entity {
         return Math.random()*15+0.5
     }
 
-    private randomPosition(): Vector3 {
-        function r() {
-            return Math.random()*15+0.5
-         }
-        return new Vector3(r(),this.GROUND_HEIGHT,r()) 
-    }
-
     public avatarGrabbing(): void {
         this.isGrabbed = true
         const pos = this.getComponent(Transform).position
@@ -109,16 +102,4 @@ export class Item extends Entity {
         pos.y = -0.85
         pos.z = 0.45
     }
-
-    // private isInsideBounds(transform: Transform): boolean {
-    //     if( 0 < transform.position.x 
-    //         && 16 > transform.position.x 
-    //         && 0 < transform.position.y 
-    //         && 16 > transform.position.y  ) {
-    //             return true
-    //         } else {
-    //             return false
-    //         }            
-    // }
-
 } 

@@ -10,7 +10,7 @@ export class Coin extends Entity {
         const triggerBoxShape = new utils.TriggerBoxShape(
             new Vector3(1.5, 3, 1.5),
             new Vector3(0, 1, 0)
-          ) // Trigger shape for coin
+          ) 
 
         this.addComponent(new GLTFShape("models/Cansy.glb"))
         this.addComponent(new Transform({position:position}))
@@ -23,14 +23,12 @@ export class Coin extends Entity {
         this.addComponent(
             new utils.TriggerComponent(triggerBoxShape, {
             onCameraEnter: () => {
-                // Camera enter
                 this.getComponent(Transform).scale.setAll(0)
                 this.getComponent(AudioSource).playOnce()
             },
             onCameraExit: () => {
-                // Camera exit
                 engine.removeEntity(this)
-            },
+            }
             })
         )
     }

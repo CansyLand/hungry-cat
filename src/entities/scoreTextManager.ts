@@ -44,8 +44,7 @@ class ScoreText extends Entity {
         textShape.fontSize = 5
         this.addComponent(textShape)
         this.addComponent(new Transform({
-            position: new Vector3(this.r(2),-0.5,this.r(2)),
-            // rotation: Quaternion.Euler(0,this.r(180),0)
+            position: new Vector3(this.r(2),-0.5,this.r(2))
         }))
         this.addComponent(new Billboard(false,true,false))
     }
@@ -99,7 +98,6 @@ export class SimpleMove implements ISystem {
         })
     }
 }
-
 
 function isOutOfBounds(transform: Transform) {
         if (

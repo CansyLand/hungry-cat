@@ -101,11 +101,6 @@ export class Player {
             transform.rotation.z = 0
             transform.position.y = this.GROUND_HEIGHT
 
-            // hack for bug which causes items to drop at 0,0,0    
-            // if (Camera.instance.position.x == 0 ) {
-            //     transform.position.x = x
-            //     transform.position.z = z
-            // }
             this.dropSound()
 
             this.grabbedItem.setParent(realmManager)
