@@ -224,6 +224,14 @@ audio.getComponent(AudioSource).loop = true
 audio.getComponent(AudioSource).playing = true
 audio.getComponent(AudioSource).volume = 0.04
 
+
+
+// COIN
+import { Coin } from './entities/coin'
+new Coin(new Vector3(28,7.5,4.3))
+
+
+
 // BUGFIX to camera having no position
 
 const forwardVector: Vector3 = Vector3.Forward()
